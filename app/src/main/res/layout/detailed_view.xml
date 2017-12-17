@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:id="@+id/cover_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:paddingTop="10dp"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_home_black_24dp" />
+
+        <TextView
+            android:id="@+id/song_name"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/cover_image"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/cover_image"
+            android:fontFamily="roboto"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/song_artist"
+            android:layout_width="185sp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/switch_fav"
+            android:layout_alignBottom="@+id/switch_fav"
+            android:layout_alignStart="@+id/song_name"
+            android:fontFamily="roboto"
+            android:textAlignment="textStart"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+    <ToggleButton
+        android:id="@+id/switch_fav"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/but_dwnld"
+        android:layout_below="@+id/but_dwnld"
+        android:background="@android:color/transparent"
+        android:button="@drawable/fav"
+       />
+
+    <ToggleButton
+        android:id="@+id/but_play"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="70dp"
+        android:button="@drawable/check"
+        android:background="@android:color/transparent"
+       />
+
+        <ImageButton
+            android:id="@+id/but_dwnld"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/but_play"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="14dp"
+            app:srcCompat="@android:drawable/stat_sys_download_done" />
+
+</RelativeLayout>
+
+</android.support.v7.widget.CardView>
