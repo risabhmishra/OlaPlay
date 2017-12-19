@@ -4,11 +4,17 @@
     android:layout_height="match_parent"
     tools:context="risabh_mishra.olaandroidplay.Favourites">
 
+    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_swipe">
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_fav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none" />
+    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
 
 </FrameLayout>

@@ -1,5 +1,6 @@
 package risabh_mishra.olaandroidplay;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -15,7 +16,7 @@ import retrofit2.http.Streaming;
 public interface ApiInterface {
 
     @GET("studio")
-    Call<List<Songs>> getSongsInfo();
+    Call<ArrayList<Songs>> getSongsInfo();
 
     /*
     @Streaming

@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 
 /**
@@ -24,7 +27,8 @@ public class Favourites extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     RecyclerViewAdapter recyclerViewAdapter;
     SharedPreference sharedPreference;
-    List<Songs> favorites;
+    ArrayList<Songs> favorites;
+    private WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
 
     public Favourites() {
         // Required empty public constructor
@@ -42,6 +46,22 @@ public class Favourites extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(layoutManager);
 
+        mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) v.findViewById(R.id.main_swipe);
+        mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                // Do work to refresh the list here.
+
+                sharedPreference = new SharedPreference();
+                favorites = sharedPreference.getFavorites(getActivity());
+                if (favorites != null) {
+                    //recyclerViewAdapter = new RecyclerViewAdapter(favorites,getActivity());
+                    recyclerViewAdapter = new RecyclerViewAdapter(favorites,getActivity());
+                    recycler.setAdapter(recyclerViewAdapter);
+                }
+
+                mWaveSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         sharedPreference = new SharedPreference();
         favorites = sharedPreference.getFavorites(getActivity());

@@ -1,3 +1,4 @@
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,13 +7,6 @@
     tools:context="risabh_mishra.olaandroidplay.home">
 
 
-    <android.support.v7.widget.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        app:defaultQueryHint="Search Songs..." />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rview"
         android:layout_width="match_parent"
@@ -20,5 +14,8 @@
         android:layout_below="@+id/search_view"
         android:layout_gravity="bottom"
         android:scrollbars="vertical" />
+
+    <include layout="@layout/searchview"/>
+
 
 </FrameLayout>

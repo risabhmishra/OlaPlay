@@ -25,6 +25,8 @@ public class SharedPreference {
         super();
     }
 
+    List<Songs> favorites = new ArrayList<Songs>();
+
     // This four methods are used for maintaining favorites.
     public void saveFavorites(Context context, List<Songs> favorites) {
         SharedPreferences settings;
@@ -43,24 +45,30 @@ public class SharedPreference {
     }
 
     public void addFavorite(Context context, Songs songs) {
-        List<Songs> favorites = getFavorites(context);
+        favorites = getFavorites(context);
         if (favorites == null)
             favorites = new ArrayList<Songs>();
-        favorites.add(songs);
-        saveFavorites(context, favorites);
+        if(favorites.contains(songs)){saveFavorites(context, favorites);}
+        else{
+            favorites.add(songs);
+            saveFavorites(context, favorites);
+        }
+
+
     }
 
     public void removeFavorite(Context context, Songs songs) {
-        List<Songs> favorites = getFavorites(context);
+        favorites = getFavorites(context);
         if (favorites != null) {
             favorites.remove(songs);
             saveFavorites(context, favorites);
+
         }
     }
 
-    public List<Songs> getFavorites(Context context) {
+    public ArrayList<Songs> getFavorites(Context context) {
         SharedPreferences settings;
-        List<Songs> favorites;
+
 
         settings = context.getSharedPreferences(PREFS_NAME,
                 Context.MODE_PRIVATE);
@@ -76,6 +84,6 @@ public class SharedPreference {
         } else
             return null;
 
-        return (List<Songs>) favorites;
+        return (ArrayList<Songs>) favorites;
     }
 }

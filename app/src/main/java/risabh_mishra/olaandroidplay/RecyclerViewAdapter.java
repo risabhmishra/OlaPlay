@@ -48,15 +48,15 @@ import static android.content.ContentValues.TAG;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapter.MyViewHolder> implements Filterable{
 
-    private List<Songs> songs;
-    private List<Songs> filteredsongs;
+    private ArrayList<Songs> songs;
+    private ArrayList<Songs> filteredsongs;
     private Context ctx;
     SharedPreference sharedPreference;
     MediaPlayer mediaPlayer;
 
 
 
-    public RecyclerViewAdapter(List<Songs> songs, Context ctx) {
+    public RecyclerViewAdapter(ArrayList<Songs> songs, Context ctx) {
         this.songs = songs;
         this.ctx = ctx;
         this.filteredsongs=songs;
@@ -69,6 +69,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detailed_view,parent,false);
 
 
+
        mediaPlayer  = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
@@ -78,18 +79,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-        holder.name.setText(songs.get(position).getSong());
-        holder.artist.setText("Artists: " + songs.get(position).getArtist());
-        Glide.with(ctx).load(songs.get(position).getCoverImage()).into(holder.imageView);
+        holder.name.setText(filteredsongs.get(position).getSong());
+        holder.artist.setText("Artists: " + filteredsongs.get(position).getArtist());
+        Glide.with(ctx).load(filteredsongs.get(position).getCoverImage()).into(holder.imageView);
 
         holder.play.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                 if (b) {
-                    funcplay(songs.get(position).getURL(), 1);
+                    funcplay(filteredsongs.get(position).getURL(), 1);
                 } else {
-                    funcplay(songs.get(position).getURL(), 0);
+                    funcplay(filteredsongs.get(position).getURL(), 0);
 
                 }
             }
@@ -99,7 +100,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
          /*If a product exists in shared preferences then set heart_red drawable
          * and set a tag*/
 
-        if (checkFavoriteItem(songs.get(position))) {
+        if (checkFavoriteItem(filteredsongs.get(position))) {
             holder.fav.setChecked(true);
         } else {
             holder.fav.setChecked(false);
@@ -109,10 +110,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    sharedPreference.addFavorite(ctx,songs.get(position));
+                    sharedPreference.addFavorite(ctx,filteredsongs.get(position));
 
                 } else {
-                       sharedPreference.removeFavorite(ctx,songs.get(position));
+                       sharedPreference.removeFavorite(ctx,filteredsongs.get(position));
                 }
             }
         });
@@ -124,10 +125,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
             public void onClick(View view) {
 
                 DownloadManager downloadmanager = (DownloadManager) ctx.getSystemService(Context.DOWNLOAD_SERVICE);
-                Uri uri = Uri.parse(songs.get(position).getURL());
-                File destination = new File(ctx.getExternalFilesDir(null), "olaplay.mp3");
+                Uri uri = Uri.parse(filteredsongs.get(position).getURL());
+                File destination = new File(ctx.getExternalFilesDir(null), "olaplay");
                 DownloadManager.Request request = new DownloadManager.Request(uri);
-                request.setTitle("My File");
+                request.setTitle(filteredsongs.get(position).getSong()+".mp3");
                 request.setDescription("Downloading");
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 request.setDestinationUri(Uri.fromFile(destination));
@@ -141,7 +142,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
     /*Checks whether a particular product exists in SharedPreferences*/
     public boolean checkFavoriteItem(Songs songs) {
         boolean check = false;
-        List<Songs> favorites = sharedPreference.getFavorites(ctx);
+        ArrayList<Songs> favorites = sharedPreference.getFavorites(ctx);
         if (favorites != null) {
             for (Songs songsi : favorites) {
                 if (songsi.equals(songs)) {
@@ -168,7 +169,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
         }
         try{
             mediaPlayer.prepare();
-             //It might take long time to prepare.
+            // It might take long time to prepare.
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -182,7 +183,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
 
     @Override
     public int getItemCount() {
-        return songs.size();
+        return filteredsongs.size();
     }
 
 
@@ -198,7 +199,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
                     filteredsongs = songs;
                 }
                  else{
-                    List<Songs> filteredlist = new ArrayList<Songs>();
+                    ArrayList<Songs> filteredlist = new ArrayList<Songs>();
 
                     for(Songs songs:filteredsongs){
                         if(songs.getSong().toLowerCase().contains(charString)||songs.getArtist().toLowerCase().contains(charString))
@@ -216,7 +217,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-               filteredsongs = (List<Songs>)filterResults.values;
+               filteredsongs = (ArrayList<Songs>)filterResults.values;
                notifyDataSetChanged();
             }
         };
