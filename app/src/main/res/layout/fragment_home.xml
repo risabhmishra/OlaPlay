@@ -6,16 +6,33 @@
     android:layout_height="470dp"
     tools:context="risabh_mishra.olaandroidplay.home">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <android.support.v7.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingTop="10dp"
+        android:visibility="visible"
+        app:defaultQueryHint="Search Your Song..."></android.support.v7.widget.SearchView>
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rview"
         android:layout_width="match_parent"
         android:layout_height="420dp"
-        android:layout_below="@+id/search_view"
         android:layout_gravity="bottom"
         android:scrollbars="vertical" />
 
-    <include layout="@layout/searchview"/>
-
+    </LinearLayout>
 
 </FrameLayout>
